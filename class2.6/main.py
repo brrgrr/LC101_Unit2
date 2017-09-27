@@ -4,25 +4,25 @@ app = Flask(__name__)
 
 app.config['DEBUG'] = True
 
-title = ''
+title_mod = ''
 
 
 @app.route("/")
 def index():
-    title = 'Hello Form'
+    title_mod = 'Hello Form'
     return render_template(
         'hello_form.html',
-        title=title
+        title_mod=title_mod
     )
 
 
 @app.route("/hello", methods=['POST'])
 def hello():
-    title = 'Hello Greeting'
+    title_mod = 'Hello Greeting'
     first_name = request.form['first_name']
     return render_template(
         'hello_greeting.html',
-        title=title,
+        title_mod=title_mod,
         name=first_name
     )
 
@@ -32,7 +32,7 @@ tasks = []
 
 @app.route('/todos', methods=['POST', 'GET'])
 def todos():
-    title = 'TODOs'
+    title_mod = 'TODOs'
 
     if request.method == 'POST':
         task = request.form['task']
@@ -40,7 +40,7 @@ def todos():
 
     return render_template(
         'todos.html',
-        title=title,
+        title_mod=title_mod,
         tasks=tasks
     )
 

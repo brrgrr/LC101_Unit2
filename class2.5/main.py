@@ -5,10 +5,20 @@ app = Flask(__name__)
 
 app.config['DEBUG'] = True
 
+title_mod = ''
+
 
 @app.route('/validate-time')
 def display_time_form():
-    return render_template('form.html', hours='', hours_error='', minutes='', minutes_error='')
+    title_mod = 'Validate Time'
+    return render_template(
+        'form.html',
+        title_mod=title_mod,
+        hours='',
+        hours_error='',
+        minutes='',
+        minutes_error=''
+    )
 
 
 def is_integer(num):
@@ -50,12 +60,23 @@ def validate_time():
         time = str(hours) + ':' + str(minutes)
         return redirect('valid-time?time={0}'.format(time))
     else:
-        return render_template('form.html', hours=hours, hours_error=hours_error, minutes=minutes, minutes_error=minutes_error)
+        return render_template(
+            'form.html',
+            title_mod=title_mod,
+            hours=hours,
+            hours_error=hours_error, minutes=minutes,
+            minutes_error=minutes_error
+        )
+
 
 @app.route('/valid-time')
 def valid_time():
+    title_mod = 'Validated Time'
     time = request.args.get('time')
-    return render_template('valid.html', time = time)
+    return render_template(
+        'valid.html',
+        title_mod=title_mod,
+        time=time)
 
 
 if __name__ == '__main__':
