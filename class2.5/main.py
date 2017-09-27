@@ -47,9 +47,15 @@ def validate_time():
             minutes = ''
 
     if not hours_error and not minutes_error:
-        return 'Success!'
+        time = str(hours) + ':' + str(minutes)
+        return redirect('valid-time?time={0}'.format(time))
     else:
         return render_template('form.html', hours=hours, hours_error=hours_error, minutes=minutes, minutes_error=minutes_error)
+
+@app.route('/valid-time')
+def valid_time():
+    time = request.args.get('time')
+    return render_template('valid.html', time = time)
 
 
 if __name__ == '__main__':
