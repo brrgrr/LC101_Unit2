@@ -5,28 +5,10 @@ app = Flask(__name__)
 
 app.config['DEBUG'] = True
 
-time_form = '''
-<style>
-    .error {{ color: red; }}
-</style>
-<h1>Validate Time</h1>
-<form method='POST'>
-    <label>Hours (24-hour format)
-        <input name='hours' type='text' value='{hours}' />
-    </label>
-    <p class='error'>{hours_error}</p>
-    <label>Minutes
-        <input name='minutes' type='text' value='{minutes}' />
-    </label>
-    <p class='error'>{minutes_error}</p>
-    <input type='submit' value='Validate' />
-</form>
-'''
-
 
 @app.route('/validate-time')
 def display_time_form():
-    return time_form.format(hours='', hours_error='', minutes='', minutes_error='')
+    return render_template('form.html', hours='', hours_error='', minutes='', minutes_error='')
 
 
 def is_integer(num):
@@ -67,7 +49,7 @@ def validate_time():
     if not hours_error and not minutes_error:
         return 'Success!'
     else:
-        return time_form.format(hours=hours, hours_error=hours_error, minutes=minutes, minutes_error=minutes_error)
+        return render_template('form.html', hours=hours, hours_error=hours_error, minutes=minutes, minutes_error=minutes_error)
 
 
 if __name__ == '__main__':
